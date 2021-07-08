@@ -5,6 +5,8 @@
 import pygame
 import random
 
+from pygame.constants import APPACTIVE
+
 pygame.init()
 winHeight = 480
 winWidth = 700
@@ -22,6 +24,10 @@ LIGHT_BLUE = (102,255,255)
 btn_font = pygame.font.SysFont("arial", 20)
 guess_font = pygame.font.SysFont("monospace", 24)
 lost_font = pygame.font.SysFont('arial', 45)
+russian_alphabet = []
+for i in range(1040,1071):
+    russian_alphabet.append(chr(i))
+print(russian_alphabet)
 word = ''
 buttons = []
 guessed = []
@@ -79,7 +85,7 @@ def spacedOut(word, guessed=[]):
         if word[x] != ' ':
             spacedWord += '_ '
             for i in range(len(guessedLetters)):
-                if word[x].upper() == guessedLetters[i]:
+                if word[x].lower() == guessedLetters[i]:
                     spacedWord = spacedWord[:-2]
                     spacedWord += word[x].upper() + ' '
         elif word[x] == ' ':
@@ -142,15 +148,21 @@ def reset():
 
 # Setup buttons
 increase = round(winWidth / 13)
-for i in range(26):
+for i in range(32):
     if i < 13:
         y = 40
         x = 25 + (increase * i)
-    else:
-        x = 25 + (increase * (i - 13))
+    elif i<26:
         y = 85
-    buttons.append([LIGHT_BLUE, x, y, 20, True, 65 + i])
+        x = 25 +(increase * (i - 13))
+    else:
+        x = 25 + (increase * (i - 26))
+        y = 130
+    buttons.append([LIGHT_BLUE, x, y, 20, True, 1072 + i])
     # buttons.append([color, x_pos, y_pos, radius, visible, char])
+
+
+
 
 word = randomWord()
 inPlay = True
@@ -170,7 +182,8 @@ while inPlay:
             letter = buttonHit(clickPos[0], clickPos[1])
             if letter != None:
                 guessed.append(chr(letter))
-                buttons[letter - 65][4] = False
+                #print(buttons)
+                buttons[letter - 1072][4] = False
                 if hang(chr(letter)):
                     if limbs != 5:
                         limbs += 1
