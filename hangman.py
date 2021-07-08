@@ -25,7 +25,7 @@ btn_font = pygame.font.SysFont("arial", 20)
 guess_font = pygame.font.SysFont("monospace", 24)
 lost_font = pygame.font.SysFont('arial', 45)
 russian_alphabet = []
-for i in range(1040,1071):
+for i in range(1040,1072):
     russian_alphabet.append(chr(i))
 print(russian_alphabet)
 word = ''
@@ -63,7 +63,7 @@ def redraw_game_window():
 
 
 def randomWord():
-    file = open('words.txt')
+    file = open('words.txt', encoding="utf-8")
     f = file.readlines()
     i = random.randrange(0, len(f) - 1)
 
